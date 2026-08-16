@@ -7,6 +7,10 @@ locked behind token authentication.
 > The earlier Course 6 build of this repo (categories, cart, orders, delivery-crew roles)
 > is preserved at the git tag [`course6-api-final`](../../tree/course6-api-final).
 
+![Little Lemon home page](docs/screenshot-home.png)
+
+![Request path: clients, routing and auth, API layer, data](docs/architecture.png)
+
 ## Requirements covered
 
 | Requirement | Where |
@@ -141,3 +145,7 @@ static/               css/, img/
 insomnia/             REST client collection
 .env.example          environment template
 ```
+
+## License
+
+[MIT](LICENSE)
