@@ -153,6 +153,22 @@ main {
 .empty { color: #6b6b6b; padding: 1rem 0; }
 
 /* ------------------------------------------------------------------ forms */
+/* Booking page: form beside the reservation list on wide screens. */
+.book-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 420px) 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.reservations h2 {
+  margin: 0 0 0.75rem;
+  color: var(--green);
+  font-size: 1.35rem;
+}
+
+.reservations .menu-item:first-child { border-top: 1px solid var(--cloud); }
+
 .form-card {
   background: var(--cloud);
   border-radius: var(--radius);
@@ -187,6 +203,10 @@ main {
   text-align: center;
   padding: 1.25rem;
   font-size: 0.9rem;
+}
+
+@media (max-width: 800px) {
+  .book-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 720px) {

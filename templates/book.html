@@ -9,25 +9,27 @@
 </section>
 
 {% if user.is_authenticated %}
-  <form id="booking-form" class="form-card">
-    {% csrf_token %}
-    <label for="name">Name on the reservation</label>
-    <input id="name" name="name" type="text" value="{{ user.username }}" required>
+  <div class="book-layout">
+    <form id="booking-form" class="form-card">
+      {% csrf_token %}
+      <label for="name">Name on the reservation</label>
+      <input id="name" name="name" type="text" value="{{ user.username }}" required>
 
-    <label for="no_of_guests">Number of guests</label>
-    <input id="no_of_guests" name="no_of_guests" type="number" min="1" max="12" value="2" required>
+      <label for="no_of_guests">Number of guests</label>
+      <input id="no_of_guests" name="no_of_guests" type="number" min="1" max="12" value="2" required>
 
-    <label for="booking_date">Date and time</label>
-    <input id="booking_date" name="booking_date" type="datetime-local" required>
+      <label for="booking_date">Date and time</label>
+      <input id="booking_date" name="booking_date" type="datetime-local" required>
 
-    <button type="submit" class="cta-button">Reserve</button>
-    <p id="booking-status" class="status" role="status"></p>
-  </form>
+      <button type="submit" class="cta-button">Reserve</button>
+      <p id="booking-status" class="status" role="status"></p>
+    </form>
 
-  <section class="page-head">
-    <h2>Your reservations</h2>
-  </section>
-  <ul id="booking-list" class="menu-list"></ul>
+    <section class="reservations">
+      <h2>Your reservations</h2>
+      <ul id="booking-list" class="menu-list"></ul>
+    </section>
+  </div>
 
   <script>
     const form = document.getElementById("booking-form");
