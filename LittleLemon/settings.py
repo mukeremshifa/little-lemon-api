@@ -1,14 +1,21 @@
 """
-Django settings for the Little Lemon REST API project.
+Django settings for the Little Lemon capstone project.
 
-Defaults target local development on SQLite. Every environment-specific value can
-be overridden through environment variables so the same settings module can be
-promoted to production untouched.
+The backend runs on MySQL. Every environment-specific value — credentials, secret
+key, debug flag — is read from the environment (or a local, gitignored ``.env``)
+so the same settings module can be promoted to production untouched.
+
+Copy ``.env.example`` to ``.env`` and fill in your database credentials.
 """
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load .env if present; real environment variables always win.
+load_dotenv(BASE_DIR / ".env")
 
 
 # --------------------------------------------------------------------------- #
@@ -34,7 +41,6 @@ INSTALLED_APPS = [
     # Third party
     "rest_framework",
     "rest_framework.authtoken",  # DRF token auth (required by Djoser token endpoints)
-    "django_filters",            # Filtering backend for the menu-item endpoints
     "djoser",                    # User registration / token management endpoints
     # Local
     "LittleLemonAPI",
@@ -55,7 +61,7 @@ ROOT_URLCONF = "LittleLemon.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -73,10 +79,10 @@ WSGI_APPLICATION = "LittleLemon.wsgi.application"
 # --------------------------------------------------------------------------- #
 # Database
 #
-# SQLite by default. Set DB_ENGINE=mysql plus the DB_* variables to switch to
-# MySQL without touching this file.
+# MySQL by default, driven by the DB_* variables in .env. Set DB_ENGINE=sqlite to
+# fall back to a local SQLite file (handy for a quick run without a DB server).
 # --------------------------------------------------------------------------- #
-if os.environ.get("DB_ENGINE", "sqlite").lower() == "mysql":
+if os.environ.get("DB_ENGINE", "mysql").lower() == "mysql":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
@@ -111,7 +117,12 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Where django.contrib.auth sends users after login / logout.
+LOGIN_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "index"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -125,23 +136,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ),
-    # Endpoints opt out explicitly (menu browsing) rather than opting in.
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-    "DEFAULT_FILTER_BACKENDS": (
-        "django_filters.rest_framework.DjangoFilterBackend",
-        "rest_framework.filters.OrderingFilter",
-        "rest_framework.filters.SearchFilter",
-    ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
-    "DEFAULT_THROTTLE_CLASSES": (
-        "rest_framework.throttling.AnonRateThrottle",
-        "rest_framework.throttling.UserRateThrottle",
-    ),
-    "DEFAULT_THROTTLE_RATES": {
-        "anon": "30/minute",
-        "user": "120/minute",
-    },
 }
 
 

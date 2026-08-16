@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Little Lemon &middot; Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-text">
+    <h1>Little Lemon</h1>
+    <p class="tagline">Chicago</p>
+    <p>
+      A family-owned Mediterranean restaurant, focused on traditional recipes
+      served with a modern twist. Sit down to a short menu of dishes that rotate
+      with the season, prepared fresh every day.
+    </p>
+    <a class="cta-button" href="{% url 'book' %}">Reserve a table</a>
+  </div>
+  <img class="hero-img" src="{% static 'img/restaurant.svg' %}" alt="The Little Lemon dining room">
+</section>
+
+<section class="cards">
+  <article class="card">
+    <h2>Fresh daily</h2>
+    <p>Produce sourced each morning from local Chicago markets.</p>
+  </article>
+  <article class="card">
+    <h2>Mediterranean roots</h2>
+    <p>Recipes carried over from the Greek and Italian coasts.</p>
+  </article>
+  <article class="card">
+    <h2>Open for dinner</h2>
+    <p>Tuesday through Sunday, 5pm until late. Reservations recommended.</p>
+  </article>
+</section>
+{% endblock %}

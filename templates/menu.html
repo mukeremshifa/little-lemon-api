@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Little Lemon &middot; Menu{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <h1>Our menu</h1>
+  <p>Served every evening from 5pm.</p>
+</section>
+
+{% if menu_items %}
+  <ul class="menu-list">
+    {% for item in menu_items %}
+      <li class="menu-item">
+        <div>
+          <h2>{{ item.title }}</h2>
+          <p class="stock">
+            {% if item.inventory > 0 %}
+              {{ item.inventory }} available
+            {% else %}
+              Sold out for tonight
+            {% endif %}
+          </p>
+        </div>
+        <span class="price">${{ item.price }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="empty">
+    Nothing on the menu yet. Add dishes through the
+    <a href="/admin/">admin</a> or the <a href="/api/menu/">menu API</a>.
+  </p>
+{% endif %}
+{% endblock %}

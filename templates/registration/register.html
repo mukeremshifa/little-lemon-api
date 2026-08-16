@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Little Lemon &middot; Register{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <h1>Create an account</h1>
+  <p>An account lets you reserve tables and see your reservation history.</p>
+</section>
+
+<form method="post" class="form-card">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="cta-button">Register</button>
+</form>
+
+<p class="empty">Already registered? <a href="{% url 'login' %}">Log in</a>.</p>
+{% endblock %}

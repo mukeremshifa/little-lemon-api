@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Little Lemon logo">
+  <circle cx="32" cy="32" r="30" fill="#F4CE14"/>
+  <path d="M32 12c9 6 14 12 14 20 0 8-6 14-14 14s-14-6-14-14c0-8 5-14 14-20z" fill="#495E57"/>
+  <path d="M32 20v26" stroke="#F4CE14" stroke-width="3" stroke-linecap="round"/>
+</svg>

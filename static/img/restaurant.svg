@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" width="480" height="360" role="img" aria-label="Illustration of the Little Lemon dining room">
+  <rect width="480" height="360" fill="#FBDABB"/>
+  <rect y="250" width="480" height="110" fill="#EE9972"/>
+
+  <!-- back wall windows -->
+  <rect x="40" y="50" width="110" height="130" rx="8" fill="#EDEFEE"/>
+  <rect x="185" y="50" width="110" height="130" rx="8" fill="#EDEFEE"/>
+  <rect x="330" y="50" width="110" height="130" rx="8" fill="#EDEFEE"/>
+  <path d="M40 115h110M185 115h110M330 115h110" stroke="#FBDABB" stroke-width="6"/>
+
+  <!-- table -->
+  <ellipse cx="240" cy="262" rx="150" ry="26" fill="#495E57"/>
+  <rect x="228" y="262" width="24" height="70" fill="#495E57"/>
+  <ellipse cx="240" cy="336" rx="60" ry="14" fill="#3b4c46"/>
+
+  <!-- plates -->
+  <ellipse cx="170" cy="255" rx="34" ry="12" fill="#EDEFEE"/>
+  <ellipse cx="310" cy="255" rx="34" ry="12" fill="#EDEFEE"/>
+  <ellipse cx="170" cy="253" rx="18" ry="6" fill="#F4CE14"/>
+  <ellipse cx="310" cy="253" rx="18" ry="6" fill="#F4CE14"/>
+
+  <!-- centrepiece -->
+  <rect x="232" y="216" width="16" height="34" rx="4" fill="#EDEFEE"/>
+  <circle cx="240" cy="208" r="14" fill="#F4CE14"/>
+  <path d="M240 194v-14" stroke="#495E57" stroke-width="4" stroke-linecap="round"/>
+</svg>

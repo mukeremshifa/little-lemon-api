@@ -1,0 +1,412 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-08-16T00:00:00.000Z",
+  "__export_source": "little-lemon-capstone",
+  "resources": [
+    {
+      "_id": "wrk_littlelemon",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "Little Lemon Capstone API",
+      "description": "Menu and table-booking endpoints for the Little Lemon Django capstone.",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "parentId": "wrk_littlelemon",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://127.0.0.1:8000",
+        "token": ""
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "token"
+        ]
+      },
+      "metaSortKey": 1
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_littlelemon",
+      "name": "1 - Auth",
+      "metaSortKey": -3
+    },
+    {
+      "_id": "fld_menu",
+      "_type": "request_group",
+      "parentId": "wrk_littlelemon",
+      "name": "2 - Menu API",
+      "metaSortKey": -2
+    },
+    {
+      "_id": "fld_booking",
+      "_type": "request_group",
+      "parentId": "wrk_littlelemon",
+      "name": "3 - Booking API (secured)",
+      "metaSortKey": -1
+    },
+    {
+      "_id": "req_register",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Register a user",
+      "description": "Creates a customer account. Returns 201 with the new user's id and username.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/users/",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 1,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"username\": \"diner\",\n  \"password\": \"CapstonePass123!\"\n}"
+      }
+    },
+    {
+      "_id": "req_token",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Obtain auth token",
+      "description": "Returns {\"auth_token\": \"...\"}. Copy that value into the environment's `token` variable.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/token/login/",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 2,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"username\": \"diner\",\n  \"password\": \"CapstonePass123!\"\n}"
+      }
+    },
+    {
+      "_id": "req_me",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Current user",
+      "description": "Confirms the token is valid.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/users/me/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 3,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    },
+    {
+      "_id": "req_logout",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Log out (revoke token)",
+      "description": "Destroys the token. Returns 204.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/token/logout/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 4,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    },
+    {
+      "_id": "req_menu_list",
+      "_type": "request",
+      "parentId": "fld_menu",
+      "name": "List menu items",
+      "description": "Public - no token required.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/menu/",
+      "headers": [],
+      "parameters": [],
+      "metaSortKey": 1,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    },
+    {
+      "_id": "req_menu_create",
+      "_type": "request",
+      "parentId": "fld_menu",
+      "name": "Create menu item",
+      "description": "Requires a token. Returns 401 without one.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/menu/",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 2,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Greek Salad\",\n  \"price\": \"10.00\",\n  \"inventory\": 12\n}"
+      }
+    },
+    {
+      "_id": "req_menu_get",
+      "_type": "request",
+      "parentId": "fld_menu",
+      "name": "Retrieve menu item",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/menu/1/",
+      "headers": [],
+      "parameters": [],
+      "metaSortKey": 3,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    },
+    {
+      "_id": "req_menu_patch",
+      "_type": "request",
+      "parentId": "fld_menu",
+      "name": "Update menu item",
+      "description": "",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/menu/1/",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 4,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"price\": \"11.50\"\n}"
+      }
+    },
+    {
+      "_id": "req_menu_delete",
+      "_type": "request",
+      "parentId": "fld_menu",
+      "name": "Delete menu item",
+      "description": "",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/menu/1/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 5,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    },
+    {
+      "_id": "req_menu_create_anon",
+      "_type": "request",
+      "parentId": "fld_menu",
+      "name": "Create menu item - NO token (expect 401)",
+      "description": "Demonstrates that writes are rejected without authentication.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/menu/",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 6,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Should Fail\",\n  \"price\": \"1.00\",\n  \"inventory\": 1\n}"
+      }
+    },
+    {
+      "_id": "req_book_anon",
+      "_type": "request",
+      "parentId": "fld_booking",
+      "name": "List bookings - NO token (expect 401)",
+      "description": "The booking API is fully protected: every action requires authentication.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/booking/tables/",
+      "headers": [],
+      "parameters": [],
+      "metaSortKey": 1,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    },
+    {
+      "_id": "req_book_list",
+      "_type": "request",
+      "parentId": "fld_booking",
+      "name": "List my bookings",
+      "description": "Returns only the authenticated caller's reservations.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/booking/tables/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 2,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    },
+    {
+      "_id": "req_book_create",
+      "_type": "request",
+      "parentId": "fld_booking",
+      "name": "Create booking",
+      "description": "The owner is taken from the token; a client-supplied `user` field is ignored.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/booking/tables/",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 3,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Mukerem\",\n  \"no_of_guests\": 4,\n  \"booking_date\": \"2026-09-01T19:30:00Z\"\n}"
+      }
+    },
+    {
+      "_id": "req_book_get",
+      "_type": "request",
+      "parentId": "fld_booking",
+      "name": "Retrieve booking",
+      "description": "Another user's booking returns 404, not 403.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/booking/tables/1/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 4,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    },
+    {
+      "_id": "req_book_patch",
+      "_type": "request",
+      "parentId": "fld_booking",
+      "name": "Update booking",
+      "description": "",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/booking/tables/1/",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 5,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"no_of_guests\": 6\n}"
+      }
+    },
+    {
+      "_id": "req_book_delete",
+      "_type": "request",
+      "parentId": "fld_booking",
+      "name": "Cancel booking",
+      "description": "",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/booking/tables/1/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Token {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "metaSortKey": 6,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {}
+    }
+  ]
+}

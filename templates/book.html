@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Little Lemon &middot; Book a table{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <h1>Book a table</h1>
+  <p>Reservations for parties of up to 12.</p>
+</section>
+
+{% if user.is_authenticated %}
+  <form id="booking-form" class="form-card">
+    {% csrf_token %}
+    <label for="name">Name on the reservation</label>
+    <input id="name" name="name" type="text" value="{{ user.username }}" required>
+
+    <label for="no_of_guests">Number of guests</label>
+    <input id="no_of_guests" name="no_of_guests" type="number" min="1" max="12" value="2" required>
+
+    <label for="booking_date">Date and time</label>
+    <input id="booking_date" name="booking_date" type="datetime-local" required>
+
+    <button type="submit" class="cta-button">Reserve</button>
+    <p id="booking-status" class="status" role="status"></p>
+  </form>
+
+  <section class="page-head">
+    <h2>Your reservations</h2>
+  </section>
+  <ul id="booking-list" class="menu-list"></ul>
+
+  <script>
+    const form = document.getElementById("booking-form");
+    const statusEl = document.getElementById("booking-status");
+    const list = document.getElementById("booking-list");
+    const csrf = form.querySelector("[name=csrfmiddlewaretoken]").value;
+
+    async function loadBookings() {
+      const res = await fetch("/api/booking/tables/", {
+        headers: { "Accept": "application/json" },
+      });
+      if (!res.ok) { return; }
+      const data = await res.json();
+      const items = data.results || data;
+      list.innerHTML = items.length
+        ? items.map(b => `<li class="menu-item"><div><h2>${b.name}</h2>`
+            + `<p class="stock">${b.no_of_guests} guests</p></div>`
+            + `<span class="price">${new Date(b.booking_date).toLocaleString()}</span></li>`).join("")
+        : `<li class="empty">No reservations yet.</li>`;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      statusEl.textContent = "Saving…";
+      const res = await fetch("/api/booking/tables/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRFToken": csrf },
+        body: JSON.stringify({
+          name: form.name.value,
+          no_of_guests: Number(form.no_of_guests.value),
+          booking_date: new Date(form.booking_date.value).toISOString(),
+        }),
+      });
+      if (res.ok) {
+        statusEl.textContent = "Table reserved.";
+        form.reset();
+        loadBookings();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        statusEl.textContent = "Could not reserve: " + JSON.stringify(err);
+      }
+    });
+
+    loadBookings();
+  </script>
+{% else %}
+  <p class="empty">
+    Please <a href="{% url 'login' %}">log in</a> or
+    <a href="{% url 'register' %}">create an account</a> to reserve a table.
+  </p>
+{% endif %}
+{% endblock %}

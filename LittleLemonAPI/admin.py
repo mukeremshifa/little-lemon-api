@@ -1,34 +1,18 @@
-"""Django admin registration — lets an admin add categories and menu items via the UI."""
+"""Django admin registration."""
 from django.contrib import admin
 
-from .models import Cart, Category, MenuItem, Order, OrderItem
+from .models import Booking, Menu
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("title", "slug")
-    prepopulated_fields = {"slug": ("title",)}
-    search_fields = ("title", "slug")
-
-
-@admin.register(MenuItem)
-class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ("title", "price", "category", "featured")
-    list_filter = ("category", "featured")
-    list_editable = ("price", "featured")
+@admin.register(Menu)
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ("title", "price", "inventory")
+    list_editable = ("price", "inventory")
     search_fields = ("title",)
 
 
-class OrderItemInline(admin.TabularInline):
-    model = OrderItem
-    extra = 0
-
-
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "delivery_crew", "status", "total", "date")
-    list_filter = ("status", "date")
-    inlines = [OrderItemInline]
-
-
-admin.site.register(Cart)
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ("name", "no_of_guests", "booking_date", "user")
+    list_filter = ("booking_date",)
+    search_fields = ("name",)

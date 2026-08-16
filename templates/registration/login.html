@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Little Lemon &middot; Log in{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <h1>Log in</h1>
+</section>
+
+<form method="post" class="form-card">
+  {% csrf_token %}
+  {% if form.errors %}
+    <p class="status error">Username and password did not match. Please try again.</p>
+  {% endif %}
+  {{ form.as_p }}
+  <button type="submit" class="cta-button">Log in</button>
+</form>
+
+<p class="empty">No account yet? <a href="{% url 'register' %}">Register here</a>.</p>
+{% endblock %}

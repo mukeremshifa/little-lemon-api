@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Little Lemon &middot; Logged out{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <h1>You are logged out</h1>
+  <p>Thanks for visiting. <a href="{% url 'login' %}">Log back in</a> when you are ready.</p>
+</section>
+{% endblock %}

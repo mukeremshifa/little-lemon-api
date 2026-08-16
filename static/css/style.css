@@ -1,0 +1,196 @@
+/* Little Lemon — brand palette from the restaurant's style guide. */
+:root {
+  --green: #495e57;
+  --yellow: #f4ce14;
+  --salmon: #ee9972;
+  --peach: #fbdabb;
+  --cloud: #edefee;
+  --charcoal: #333333;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Karla, system-ui, sans-serif;
+  color: var(--charcoal);
+  background: #fff;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------- header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: var(--green);
+  color: var(--cloud);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--yellow);
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.site-header nav a {
+  color: var(--cloud);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-header nav a:hover { color: var(--yellow); }
+
+.site-header nav a.cta {
+  background: var(--yellow);
+  color: var(--charcoal);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+}
+
+.who { color: var(--peach); font-size: 0.9rem; }
+
+.inline-form { display: inline; margin: 0; }
+
+.linklike {
+  background: none;
+  border: none;
+  color: var(--cloud);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.linklike:hover { color: var(--yellow); }
+
+/* ------------------------------------------------------------------ main */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  background: var(--green);
+  color: var(--cloud);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+}
+
+.hero h1 { color: var(--yellow); margin: 0; font-size: 2.75rem; }
+.tagline { margin: 0 0 1rem; font-size: 1.4rem; }
+.hero-img { width: 100%; border-radius: var(--radius); }
+
+.cta-button {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: 0.7rem 1.6rem;
+  background: var(--yellow);
+  color: var(--charcoal);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cta-button:hover { background: var(--salmon); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.card {
+  background: var(--cloud);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.card h2 { margin-top: 0; color: var(--green); font-size: 1.15rem; }
+
+.page-head { margin-bottom: 1.5rem; }
+.page-head h1, .page-head h2 { color: var(--green); margin-bottom: 0.25rem; }
+
+/* ------------------------------------------------------------------ menu */
+.menu-list { list-style: none; padding: 0; margin: 0; }
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--cloud);
+}
+
+.menu-item h2 { margin: 0; font-size: 1.1rem; }
+.stock { margin: 0; font-size: 0.85rem; color: #6b6b6b; }
+.price { font-weight: 700; color: var(--green); font-size: 1.1rem; }
+
+.empty { color: #6b6b6b; padding: 1rem 0; }
+
+/* ------------------------------------------------------------------ forms */
+.form-card {
+  background: var(--cloud);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  max-width: 460px;
+}
+
+.form-card label { display: block; font-weight: 600; margin-top: 1rem; }
+
+.form-card input, .form-card select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccd2cf;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.form-card ul, .form-card .helptext {
+  font-size: 0.82rem;
+  color: #6b6b6b;
+  padding-left: 1rem;
+}
+
+.status { margin-top: 1rem; font-size: 0.9rem; color: var(--green); }
+.status.error { color: #b3261e; }
+
+/* ---------------------------------------------------------------- footer */
+.site-footer {
+  background: var(--charcoal);
+  color: var(--cloud);
+  text-align: center;
+  padding: 1.25rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 720px) {
+  .hero { grid-template-columns: 1fr; padding: 1.75rem; }
+  .hero h1 { font-size: 2rem; }
+  .site-header { padding: 1rem; }
+}
